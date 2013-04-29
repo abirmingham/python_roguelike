@@ -2,11 +2,6 @@ import random
 import curses
 import time
 
-WIDTH  = 20
-HEIGHT = 15
-FPS    = 60
-SLEEP_TIME = 1.0/FPS
-
 class Grid():
     def __init__(self, width, height):
         self.EMPTY = -1
@@ -89,14 +84,21 @@ class Wall():
         grid.place_obj(self)
 
 def main(screen):
+    # Config
+    width  = 80
+    height = 40
+    fps    = 60
+    sleep_time = 1.0/fps
+    #
+
     screen.nodelay(1)
 
-    grid         = Grid(WIDTH, HEIGHT)
+    grid         = Grid(width, height)
     player       = Player(1, 1)
-    game_objects = build_walls()
+    game_objects = build_walls(width, height)
     game_objects.append(player)
 
-    game_objects.append(Enemy(5, 5)) # temp
+    game_objects.append(Enemy(5, 5)) # TBD monster maker
 
     for obj in game_objects:
         grid.place_obj(obj)
@@ -109,14 +111,14 @@ def main(screen):
             obj.update(grid)
 
         grid.draw(screen)
-        time.sleep(SLEEP_TIME - (time.time() - start_time))
+        time.sleep(sleep_time - (time.time() - start_time))
 
-def build_walls():
+def build_walls(width, height):
     return [ Wall(x, y)
-            for x in range(WIDTH)
-            for y in range(HEIGHT)
-            if x == 0 or x == (WIDTH-1)
-            or y == 0 or y == (HEIGHT-1) ]
+            for x in range(width)
+            for y in range(height)
+            if x == 0 or x == (width-1)
+            or y == 0 or y == (height-1) ]
 
 def capture_input(screen, grid, player):
     key = screen.getch()
