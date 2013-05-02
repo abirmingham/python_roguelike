@@ -1,6 +1,9 @@
-class Player():
+class Player(object):
     def __init__(self, x, y):
         self.x, self.y = x, y
+
+    def alignment(self):
+        return 'good'
 
     def ascii(self):
         return 'A'

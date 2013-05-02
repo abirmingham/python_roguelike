@@ -1,4 +1,4 @@
-class Grid():
+class Grid(object):
     def __init__(self, width, height):
         self.EMPTY = -1
         self.data = [ [self.EMPTY for j in range(width)] for i in range(height) ]
